@@ -27,6 +27,7 @@ public class JpaConfig {
 
     private Environment environment;
 
+    // todo  @Value !!!
     @Autowired
     public void setEnvironment(Environment environment) {
         this.environment = environment;
@@ -44,6 +45,15 @@ public class JpaConfig {
         return dataSource;
     }
 
+//    @Bean
+//    public DataSourceInitializer dataSourceInitializer(@Qualifier("dataSource") final DataSource dataSource) {
+//        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
+//        resourceDatabasePopulator.addScript(new ClassPathResource("/data.sql"));
+//        DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+//        dataSourceInitializer.setDataSource(dataSource);
+//        dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
+//        return dataSourceInitializer;
+//    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -73,6 +83,8 @@ public class JpaConfig {
         properties.put("hibernate.show_sql", Objects.requireNonNull(environment.getProperty("db.hibernate.show_sql")));
         properties.put("hibernate.hbm2ddl.auto", Objects.requireNonNull(environment.getProperty("db.hibernate.hbm2ddl.auto")));
         properties.put("hibernate.enable_lazy_load_no_trans", true);
+        properties.put("spring.datasource.initialization-mode", Objects.requireNonNull(environment.getProperty("spring.datasource.initialization-mode")));
+
 
         return properties;
     }

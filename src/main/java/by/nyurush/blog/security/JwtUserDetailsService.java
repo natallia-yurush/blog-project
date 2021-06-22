@@ -1,6 +1,7 @@
 package by.nyurush.blog.security;
 
 import by.nyurush.blog.entity.User;
+import by.nyurush.blog.exception.user.UserNotFoundException;
 import by.nyurush.blog.security.jwt.JwtUser;
 import by.nyurush.blog.security.jwt.JwtUserFactory;
 import by.nyurush.blog.service.UserService;
@@ -20,11 +21,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findByEmail(username);
-
-        if (user == null) {
-            throw new UsernameNotFoundException("User with username: " + username + " not found");
-        }
+        User user = userService.findByEmail(username).orElseThrow(UserNotFoundException::new);
 
         JwtUser jwtUser = JwtUserFactory.create(user);
         log.info("IN loadUserByUsername - user with username: {} successfully loaded", username);

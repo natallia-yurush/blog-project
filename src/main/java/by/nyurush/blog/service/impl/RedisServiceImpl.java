@@ -32,4 +32,5 @@ public class RedisServiceImpl implements RedisService {
     public boolean isCodeExist(String code) {
         return Boolean.TRUE.equals(redisTemplate.hasKey(code));
     }
+
 }

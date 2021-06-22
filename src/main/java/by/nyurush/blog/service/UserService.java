@@ -1,27 +1,19 @@
 package by.nyurush.blog.service;
 
-import by.nyurush.blog.dto.UserDto;
 import by.nyurush.blog.entity.User;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
-    List<User> getAll();
-
-    User findByEmail(String email);
-
-    User findById(Long id);
+    Optional<User> findByEmail(String email);
 
     User register(User user);
 
-    boolean confirmUser(String email, String hashCode);
+    void confirmUser(String hashCode);
 
     void resetPassword(String email);
 
-    boolean updatePassword(String code, String newPassword);
-
-
-
+    void updatePassword(String code, String newPassword);
 
 }
