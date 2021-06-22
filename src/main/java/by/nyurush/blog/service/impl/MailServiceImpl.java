@@ -43,7 +43,7 @@ public class MailServiceImpl implements MailService {
     @Override
     public void sendConfirmationEmail(String email, String code) {
         String messageText = confirmMessage +
-                linkToConfirm + email + "/" + code;
+                linkToConfirm + code;
         sendEmail(email, messageText, confirmType);
     }
 

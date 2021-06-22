@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -86,7 +87,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updatePassword(String code, String newPassword) {
         String email = redisService.getValue(code);
-        if (email.isBlank()) {
+        if (email == null || email.isBlank()) {
             log.warn("IN updatePassword - there is no such code in redis: {}", code);
             throw new RuntimeException("Code " + code + " in redis not found");
         }
@@ -105,23 +106,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAll() {
-        List<User> result = userRepository.findAll();
-        log.info("IN getAll - {} users found", result.size());
-        return result;
+    public Optional<User> findByEmail(String email) {
+        Optional<User> foundUser = userRepository.findByEmail(email);
+        log.info("IN findByUsername - user: {} found by email: {}", foundUser, email);
+        return foundUser;
     }
 
-    @Override
-    public User findByEmail(String email) {
-        User result = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-        log.info("IN findByUsername - user: {} found by email: {}", result, email);
-        return result;
-    }
-
-    @Override
-    public User findById(Long id) {
-        User userResult = userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-        log.info("IN findById - user: {} found by id: {}", userResult, userResult.getId());
-        return userResult;
-    }
 }

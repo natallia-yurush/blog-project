@@ -2,15 +2,11 @@ package by.nyurush.blog.service;
 
 import by.nyurush.blog.entity.User;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
-    List<User> getAll();
-
-    User findByEmail(String email);
-
-    User findById(Long id);
+    Optional<User> findByEmail(String email);
 
     User register(User user);
 
@@ -19,8 +15,5 @@ public interface UserService {
     void resetPassword(String email);
 
     void updatePassword(String code, String newPassword);
-
-
-
 
 }
