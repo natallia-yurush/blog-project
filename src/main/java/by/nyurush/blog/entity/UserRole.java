@@ -2,6 +2,7 @@ package by.nyurush.blog.entity;
 
 
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -33,4 +34,12 @@ public class UserRole {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<User> users;
 
+    @Override
+    public String toString() {
+        return "UserRole{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", users=" + users +
+                '}';
+    }
 }

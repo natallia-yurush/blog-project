@@ -5,7 +5,6 @@ import by.nyurush.blog.dto.user.ResetRequestDto;
 import by.nyurush.blog.dto.user.UserDto;
 import by.nyurush.blog.entity.User;
 import by.nyurush.blog.exception.user.UserAlreadyIsActiveException;
-import by.nyurush.blog.exception.user.UserNotFoundException;
 import by.nyurush.blog.security.jwt.JwtTokenProvider;
 import by.nyurush.blog.service.RedisService;
 import by.nyurush.blog.service.UserService;
@@ -81,7 +80,7 @@ public class AuthorizationController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(email, requestDto.getPassword())
             );
-            User user = userService.findByEmail(email).orElseThrow(UserNotFoundException::new);
+            User user = userService.findByEmail(email);
 
             if (!user.isActive()) {
                 log.warn("User {} already is active", email);

@@ -1,4 +1,4 @@
-package by.nyurush.blog.converter;
+package by.nyurush.blog.converter.user;
 
 import by.nyurush.blog.dto.user.UserDto;
 import by.nyurush.blog.entity.User;

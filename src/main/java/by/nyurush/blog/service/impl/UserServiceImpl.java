@@ -106,9 +106,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        Optional<User> foundUser = userRepository.findByEmail(email);
-        log.info("IN findByUsername - user: {} found by email: {}", foundUser, email);
+    public User findByEmail(String email) {
+        User foundUser = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+        log.info("IN findByUsername - user found by email: {}", email);
         return foundUser;
     }
 
