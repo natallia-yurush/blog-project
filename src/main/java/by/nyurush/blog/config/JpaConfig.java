@@ -2,13 +2,20 @@ package by.nyurush.blog.config;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.init.DataSourceInitializer;
+import org.springframework.jdbc.datasource.init.DatabasePopulator;
+import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -27,6 +34,7 @@ public class JpaConfig {
 
     private Environment environment;
 
+    // todo  @Value !!!
     @Autowired
     public void setEnvironment(Environment environment) {
         this.environment = environment;
@@ -44,6 +52,15 @@ public class JpaConfig {
         return dataSource;
     }
 
+//    @Bean
+//    public DataSourceInitializer dataSourceInitializer(@Qualifier("dataSource") final DataSource dataSource) {
+//        ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
+//        resourceDatabasePopulator.addScript(new ClassPathResource("/data.sql"));
+//        DataSourceInitializer dataSourceInitializer = new DataSourceInitializer();
+//        dataSourceInitializer.setDataSource(dataSource);
+//        dataSourceInitializer.setDatabasePopulator(resourceDatabasePopulator);
+//        return dataSourceInitializer;
+//    }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -73,6 +90,8 @@ public class JpaConfig {
         properties.put("hibernate.show_sql", Objects.requireNonNull(environment.getProperty("db.hibernate.show_sql")));
         properties.put("hibernate.hbm2ddl.auto", Objects.requireNonNull(environment.getProperty("db.hibernate.hbm2ddl.auto")));
         properties.put("hibernate.enable_lazy_load_no_trans", true);
+        properties.put("spring.datasource.initialization-mode", Objects.requireNonNull(environment.getProperty("spring.datasource.initialization-mode")));
+
 
         return properties;
     }

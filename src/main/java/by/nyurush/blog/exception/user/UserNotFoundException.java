@@ -1,4 +1,4 @@
-package by.nyurush.blog.exception;
+package by.nyurush.blog.exception.user;
 
 public class UserNotFoundException extends RuntimeException {
     public UserNotFoundException() {

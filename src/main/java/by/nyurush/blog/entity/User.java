@@ -39,8 +39,8 @@ public class User {
     @Column(name = "created_at")
     private LocalDate createdAt;
 
-    @Column(name = "is_active")
-    private Boolean isActive;
+    @Column(name = "active")
+    private boolean active;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",

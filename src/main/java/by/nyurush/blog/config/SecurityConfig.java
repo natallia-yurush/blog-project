@@ -57,6 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         // todo: to exclude some requests
         // web.ignoring().antMatchers(...);
+        web.ignoring().antMatchers("/auth/login", "/auth/registration/**", "/auth/confirm/**", "/auth/forgot_password/**"
+                , "/auth/reset/**", "/auth/check_code");
 
     }
 }
