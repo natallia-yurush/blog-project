@@ -1,5 +1,6 @@
 package by.nyurush.blog.controller;
 
+import by.nyurush.blog.controller.util.SortOrderUtil;
 import by.nyurush.blog.dto.ArticleDto;
 import by.nyurush.blog.entity.Article;
 import by.nyurush.blog.security.jwt.JwtTokenProvider;
@@ -36,7 +37,7 @@ public class ArticleController {
 
     @GetMapping("/my")
     public List<ArticleDto> getAllUserArticles(HttpServletRequest req) {
-        List<Article> articles = articleService.findAllByUser(getEmail(req));
+        List<Article> articles = articleService.findAllByUser(jwtTokenProvider.getEmail(req));
         List<ArticleDto> articleDtos = new ArrayList<>();
         articles.forEach(article ->
                 articleDtos.add(conversionService.convert(article, ArticleDto.class))
@@ -48,18 +49,13 @@ public class ArticleController {
     public void addArticle(@RequestBody ArticleDto articleDto,
                            HttpServletRequest req) {
         Article article = conversionService.convert(articleDto, Article.class);
-        articleService.save(article, getEmail(req));
-    }
-
-    private String getEmail(HttpServletRequest req) {
-        String token = jwtTokenProvider.resolveToken(req);
-        return jwtTokenProvider.getEmail(token);
+        articleService.save(article, jwtTokenProvider.getEmail(req));
     }
 
     @DeleteMapping("/{id}")
     public void deleteArticle(@PathVariable Long id,
                               HttpServletRequest req) {
-        articleService.deleteById(id, getEmail(req));
+        articleService.deleteById(id, jwtTokenProvider.getEmail(req));
     }
 
     @PatchMapping("/{id}")
@@ -69,12 +65,12 @@ public class ArticleController {
         articleDto.setId(id);
         Article article = conversionService.convert(articleDto, Article.class);
 
-        articleService.update(article, getEmail(req));
+        articleService.update(article, jwtTokenProvider.getEmail(req));
     }
 
     //  /articles?skip=0&limit=10&q=post_title&author=id&sort=field_name&order=asc|desc
-    @GetMapping()
-    public List<ArticleDto> getWithFilter(
+    @GetMapping
+    public List<ArticleDto> getAllArticles(
             @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(name = "size", required = false, defaultValue = "100") Integer size,
             @RequestParam(name = "title", required = false) String title,
@@ -84,7 +80,7 @@ public class ArticleController {
 
     ) {
 
-        Sort.Order sortOrder = new Sort.Order(getSortOrder(order), fieldToSort);
+        Sort.Order sortOrder = new Sort.Order(SortOrderUtil.getSortOrder(order), fieldToSort);
 
         List<Article> articles;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortOrder));
@@ -98,14 +94,5 @@ public class ArticleController {
 
     }
 
-    private Sort.Direction getSortOrder(String order) {
-        if (order.equals("asc")) {
-            return Sort.Direction.ASC;
-        } else if (order.equals("desc")) {
-            return Sort.Direction.DESC;
-        }
-
-        return Sort.Direction.ASC;
-    }
 
 }

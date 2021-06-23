@@ -3,11 +3,9 @@ package by.nyurush.blog.service;
 import by.nyurush.blog.entity.Article;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface ArticleService {
     Article findById(Long id);
 

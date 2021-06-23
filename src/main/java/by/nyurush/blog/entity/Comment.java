@@ -25,13 +25,13 @@ public class Comment {
     private String message;
 
     @ManyToOne
-    @JoinColumn(name = "artice_id")
+    @JoinColumn(name = "artice_id", updatable = false)
     private Article article;
 
     @ManyToOne
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "author_id", updatable = false)
     private User user;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private LocalDate createdAt;
 }

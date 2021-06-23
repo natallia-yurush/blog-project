@@ -1,10 +1,9 @@
 package by.nyurush.blog.service.impl;
 
 import by.nyurush.blog.entity.Article;
-import by.nyurush.blog.entity.Status;
 import by.nyurush.blog.entity.User;
 import by.nyurush.blog.exception.NoPermissionException;
-import by.nyurush.blog.exception.article.ArticleNotFoundException;
+import by.nyurush.blog.exception.ArticleNotFoundException;
 import by.nyurush.blog.repository.ArticleRepository;
 import by.nyurush.blog.service.ArticleService;
 import by.nyurush.blog.service.UserService;

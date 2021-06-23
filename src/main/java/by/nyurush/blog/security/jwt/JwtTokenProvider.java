@@ -100,5 +100,10 @@ public class JwtTokenProvider {
         return result;
     }
 
+    public String getEmail(HttpServletRequest req) {
+        return getEmail(resolveToken(req));
+    }
+
+
 
 }
