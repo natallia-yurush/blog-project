@@ -1,6 +1,8 @@
 package by.nyurush.blog.service;
 
 import by.nyurush.blog.entity.Article;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,6 @@ public interface ArticleService {
 
     List<Article> findAllByUser(String email);
 
-    List<Article> findAllPublicArticle();
+    Page<Article> findToFilter(String title, Long authorId, Pageable pageable);
 
 }

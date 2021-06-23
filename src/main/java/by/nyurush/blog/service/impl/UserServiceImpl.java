@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -103,6 +102,11 @@ public class UserServiceImpl implements UserService {
 
     private String generateCode() {
         return UUID.randomUUID().toString();
+    }
+
+    @Override
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
     @Override

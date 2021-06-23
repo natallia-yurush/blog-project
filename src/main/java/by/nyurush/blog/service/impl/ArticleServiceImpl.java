@@ -10,6 +10,9 @@ import by.nyurush.blog.service.ArticleService;
 import by.nyurush.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -72,7 +75,18 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> findAllPublicArticle() {
-        return articleRepository.findAllByStatus(Status.PUBLIC);
+    public Page<Article> findToFilter(String title, Long authorId, Pageable pageable) {
+        User user = null;
+        if (authorId != null) {
+            user = userService.findById(authorId);
+        }
+
+        Article example = Article
+                .builder()
+                .title(title)
+                .user(user)
+                .build();
+
+        return articleRepository.findAll(Example.of(example), pageable);
     }
 }
