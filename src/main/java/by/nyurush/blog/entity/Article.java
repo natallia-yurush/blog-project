@@ -36,10 +36,10 @@ public class Article {
     private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "author_id", updatable = false)
     private User user;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private LocalDate createdAt;
 
     @Column(name = "updated_at")

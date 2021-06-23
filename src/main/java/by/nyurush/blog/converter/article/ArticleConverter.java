@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ArticleConverter implements Converter<ArticleDto, Article> {
+
     @Override
     public Article convert(ArticleDto articleDto) {
         Article article = new Article();

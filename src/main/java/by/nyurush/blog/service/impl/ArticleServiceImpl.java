@@ -3,33 +3,35 @@ package by.nyurush.blog.service.impl;
 import by.nyurush.blog.entity.Article;
 import by.nyurush.blog.entity.Status;
 import by.nyurush.blog.entity.User;
-import by.nyurush.blog.exception.user.UserNotFoundException;
+import by.nyurush.blog.exception.NoPermissionException;
+import by.nyurush.blog.exception.article.ArticleNotFoundException;
 import by.nyurush.blog.repository.ArticleRepository;
 import by.nyurush.blog.service.ArticleService;
 import by.nyurush.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
     private final UserService userService;
 
     @Override
-    public Optional<Article> findById(Long id) {
-        return articleRepository.findById(id);
+    public Article findById(Long id) {
+        return articleRepository.findById(id).orElseThrow(ArticleNotFoundException::new);
     }
 
     @Override
     public Article save(Article article, String email) {
         User user = userService.findByEmail(email);
         article.setUser(user);
-        if(article.getId() == null) {
+        if (article.getId() == null) {
             article.setCreatedAt(LocalDate.now());
         } else {
             article.setUpdatedAt(LocalDate.now());
@@ -39,7 +41,27 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public Article update(Article article, String email) {
+        User user = userService.findByEmail(email);
+        Article oldArticle = articleRepository.findById(article.getId())
+                .orElseThrow(ArticleNotFoundException::new);
+        if (!user.getId().equals(oldArticle.getUser().getId())) {
+            log.warn("IN update (article) User {} has no permission", user.getEmail());
+            throw new NoPermissionException();
+        }
+        article.setUpdatedAt(LocalDate.now());
+        return articleRepository.save(article);
+    }
+
+    @Override
+    public void deleteById(Long id, String email) {
+        User user = userService.findByEmail(email);
+        Article article = articleRepository.findById(id).orElseThrow(ArticleNotFoundException::new);
+        if (!user.getId().equals(article.getUser().getId())) {
+            log.warn("IN deleteById(article) User {} has no permission", user);
+            throw new NoPermissionException();
+        }
+
         articleRepository.deleteById(id);
     }
 
