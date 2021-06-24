@@ -1,5 +1,6 @@
 package by.nyurush.blog.service.impl;
 
+import by.nyurush.blog.service.CommentService;
 import by.nyurush.blog.entity.Article;
 import by.nyurush.blog.entity.Comment;
 import by.nyurush.blog.entity.User;
@@ -7,7 +8,6 @@ import by.nyurush.blog.exception.CommentNotFoundException;
 import by.nyurush.blog.exception.NoPermissionException;
 import by.nyurush.blog.repository.CommentRepository;
 import by.nyurush.blog.service.ArticleService;
-import by.nyurush.blog.service.CommentService;
 import by.nyurush.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

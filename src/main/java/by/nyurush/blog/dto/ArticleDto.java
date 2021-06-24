@@ -1,7 +1,6 @@
 package by.nyurush.blog.dto;
 
 import by.nyurush.blog.entity.Status;
-import by.nyurush.blog.entity.Tag;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -18,6 +17,6 @@ public class ArticleDto {
     private String text;
     @NotNull
     private Status status;
-    private List<Tag> tags;
+    private List<Long> tagsId;
 
 }

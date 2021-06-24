@@ -3,7 +3,6 @@ package by.nyurush.blog.converter.comment;
 import by.nyurush.blog.dto.CommentDto;
 import by.nyurush.blog.entity.Comment;
 import by.nyurush.blog.repository.ArticleRepository;
-import by.nyurush.blog.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -18,6 +17,7 @@ public class CommentConverter implements Converter<CommentDto, Comment> {
         Comment comment = new Comment();
         comment.setId(commentDto.getId());
         comment.setArticle(articleRepository.findById(commentDto.getArticleId()).orElseThrow());
+        comment.setMessage(commentDto.getMessage());
 
         return comment;
     }

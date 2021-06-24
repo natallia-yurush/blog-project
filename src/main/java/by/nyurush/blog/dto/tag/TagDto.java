@@ -1,4 +1,4 @@
-package by.nyurush.blog.dto;
+package by.nyurush.blog.dto.tag;
 
 import lombok.Data;
 

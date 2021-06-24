@@ -2,7 +2,6 @@ package by.nyurush.blog.entity;
 
 
 import lombok.Data;
-import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 

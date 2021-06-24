@@ -1,14 +1,14 @@
 package by.nyurush.blog.service.impl;
 
 import by.nyurush.blog.entity.User;
+import by.nyurush.blog.service.MailService;
+import by.nyurush.blog.service.RedisService;
 import by.nyurush.blog.exception.user.RedisCodeNotFoundException;
 import by.nyurush.blog.exception.user.UserAlreadyExistException;
 import by.nyurush.blog.exception.user.UserAlreadyIsActiveException;
 import by.nyurush.blog.exception.user.UserNotFoundException;
 import by.nyurush.blog.repository.UserRepository;
 import by.nyurush.blog.repository.UserRoleRepository;
-import by.nyurush.blog.service.MailService;
-import by.nyurush.blog.service.RedisService;
 import by.nyurush.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -112,7 +112,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmail(String email) {
         User foundUser = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
-        log.info("IN findByUsername - user found by email: {}", email);
+        log.info("IN findByUsername - user found com email: {}", email);
         return foundUser;
     }
 

@@ -2,10 +2,11 @@ package by.nyurush.blog.service.impl;
 
 import by.nyurush.blog.entity.Article;
 import by.nyurush.blog.entity.User;
-import by.nyurush.blog.exception.NoPermissionException;
 import by.nyurush.blog.exception.ArticleNotFoundException;
+import by.nyurush.blog.exception.NoPermissionException;
 import by.nyurush.blog.repository.ArticleRepository;
 import by.nyurush.blog.service.ArticleService;
+import by.nyurush.blog.service.TagService;
 import by.nyurush.blog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,7 @@ import java.util.List;
 public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
     private final UserService userService;
+    private final TagService tagService;
 
     @Override
     public Article findById(Long id) {
@@ -87,5 +89,13 @@ public class ArticleServiceImpl implements ArticleService {
                 .build();
 
         return articleRepository.findAll(Example.of(example), pageable);
+    }
+
+    @Override
+    public List<Article> findAllByTags(List<Long> articleIds) {
+        return articleRepository.findDistinctByTagsIn(
+                tagService.findAllByIdIn(articleIds)
+                        .stream()
+                        .toList());
     }
 }

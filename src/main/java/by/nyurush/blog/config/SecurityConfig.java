@@ -2,7 +2,7 @@ package by.nyurush.blog.config;
 
 import by.nyurush.blog.security.jwt.JwtConfigurer;
 import by.nyurush.blog.security.jwt.JwtTokenProvider;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,20 +14,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-
-    //todo
-    /*
-    authorizeRequests() позволяет ограничить доступ на основе HttpServletRequest с использованием реализаций RequestMatcher .
-
-    permitAll() это позволит получить публичный доступ, то есть любой желающий может получить доступ к конечной точке PUBLIC_URL без аутентификации.
-
-    anyRequest().authenticated() ограничит доступ для любой другой конечной точки , отличной от PUBLIC_URL, и пользователь должен быть аутентифицирован.
-     */
-
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     @Override
@@ -42,12 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-
                 .authorizeRequests()
-//                .antMatchers("/auth/registration/**").permitAll()
-//                .antMatchers("/auth/confirm/**").permitAll()
-//                .antMatchers(LOGIN_ENDPOINT).permitAll()
-//                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));

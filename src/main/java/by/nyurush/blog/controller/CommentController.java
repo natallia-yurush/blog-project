@@ -44,7 +44,7 @@ public class CommentController {
 
     @GetMapping("/{commentId}")
     public CommentDto getComment(@PathVariable Long articleId,
-                              @PathVariable Long commentId) {
+                                 @PathVariable Long commentId) {
         Comment comment = commentService.findById(commentId);
         return conversionService.convert(comment, CommentDto.class);
     }

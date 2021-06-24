@@ -46,10 +46,11 @@ public class ArticleController {
     }
 
     @PostMapping
-    public void addArticle(@RequestBody ArticleDto articleDto,
+    public ArticleDto addArticle(@RequestBody ArticleDto articleDto,
                            HttpServletRequest req) {
         Article article = conversionService.convert(articleDto, Article.class);
-        articleService.save(article, jwtTokenProvider.getEmail(req));
+        Article savedArticle = articleService.save(article, jwtTokenProvider.getEmail(req));
+        return conversionService.convert(savedArticle, ArticleDto.class);
     }
 
     @DeleteMapping("/{id}")
@@ -59,16 +60,17 @@ public class ArticleController {
     }
 
     @PatchMapping("/{id}")
-    public void updateArticle(@PathVariable Long id,
+    public ArticleDto updateArticle(@PathVariable Long id,
                               @RequestBody ArticleDto articleDto,
                               HttpServletRequest req) {
         articleDto.setId(id);
         Article article = conversionService.convert(articleDto, Article.class);
+        Article updatedArticle = articleService.update(article, jwtTokenProvider.getEmail(req));
 
-        articleService.update(article, jwtTokenProvider.getEmail(req));
+        return conversionService.convert(updatedArticle, ArticleDto.class);
     }
 
-    //  /articles?skip=0&limit=10&q=post_title&author=id&sort=field_name&order=asc|desc
+    //  articles?skip=0&limit=10&q=post_title&author=id&sort=field_name&order=asc|desc
     @GetMapping
     public List<ArticleDto> getAllArticles(
             @RequestParam(name = "page", required = false, defaultValue = "0") Integer page,

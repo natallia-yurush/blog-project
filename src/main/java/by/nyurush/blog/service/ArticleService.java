@@ -19,4 +19,7 @@ public interface ArticleService {
 
     Page<Article> findToFilter(String title, Long authorId, Pageable pageable);
 
+    List<Article> findAllByTags(List<Long> articleIds);
+
+
 }
