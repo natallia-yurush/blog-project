@@ -44,7 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/auth/confirm/**",
                 "/auth/forgot_password/**",
                 "/auth/reset/**",
-                "/auth/check_code"
+                "/auth/check_code",
+                "/articles"
         );
 
     }

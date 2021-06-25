@@ -9,6 +9,7 @@ import by.nyurush.blog.exception.user.UserAlreadyExistException;
 import by.nyurush.blog.exception.user.UserAlreadyIsActiveException;
 import by.nyurush.blog.exception.user.UserNotFoundException;
 import by.nyurush.blog.exception.user.UserRoleNotFoundException;
+import by.nyurush.blog.security.jwt.JwtAuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -35,7 +36,7 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(NoPermissionException.class)
+    @ExceptionHandler({NoPermissionException.class, JwtAuthenticationException.class})
     public ResponseEntity<?> handleNoPermissionException() {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }

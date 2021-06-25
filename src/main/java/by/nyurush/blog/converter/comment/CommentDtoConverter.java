@@ -13,6 +13,8 @@ public class CommentDtoConverter implements Converter<Comment, CommentDto> {
         commentDto.setId(comment.getId());
         commentDto.setMessage(comment.getMessage());
         commentDto.setArticleId(comment.getArticle().getId());
+        commentDto.setCreatedAt(comment.getCreatedAt());
+        commentDto.setAuthorId(comment.getUser().getId());
 
         return commentDto;
     }
