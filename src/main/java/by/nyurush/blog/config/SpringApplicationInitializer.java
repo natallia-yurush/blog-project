@@ -6,7 +6,6 @@ public class SpringApplicationInitializer extends AbstractAnnotationConfigDispat
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        //todo congigs
         return new Class[]{JpaConfig.class, SecurityConfig.class};
     }
 

@@ -1,6 +1,9 @@
 package by.nyurush.blog.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -17,9 +20,12 @@ import javax.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "article")
-@Data
 public class Article {
     @Id
     @Column(name = "id")
@@ -36,10 +42,10 @@ public class Article {
     private Status status;
 
     @ManyToOne
-    @JoinColumn(name = "author_id")
+    @JoinColumn(name = "author_id", updatable = false)
     private User user;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private LocalDate createdAt;
 
     @Column(name = "updated_at")

@@ -25,6 +25,8 @@ public class MailConfig {
     @Value("${mail.protocol}")
     private String protocol;
 
+    private static final String protocolProperty = "mail.transport.protocol";
+
     @Bean
     public JavaMailSender getMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
@@ -35,7 +37,7 @@ public class MailConfig {
         mailSender.setPassword(password);
 
         Properties properties = mailSender.getJavaMailProperties();
-        properties.setProperty("mail.transport.protocol", protocol);
+        properties.setProperty(protocolProperty, protocol);
 
         return mailSender;
     }

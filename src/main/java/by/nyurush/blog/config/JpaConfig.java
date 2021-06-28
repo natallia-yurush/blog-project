@@ -1,7 +1,7 @@
 package by.nyurush.blog.config;
 
+import lombok.RequiredArgsConstructor;
 import org.hibernate.jpa.HibernatePersistenceProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,21 +17,14 @@ import javax.sql.DataSource;
 import java.util.Objects;
 import java.util.Properties;
 
-
 @Configuration
+@RequiredArgsConstructor
 @EnableTransactionManagement
 @ComponentScan("by.nyurush.blog")
 @PropertySource("classpath:application.properties")
 @EnableJpaRepositories("by.nyurush.blog")
 public class JpaConfig {
-
-    private Environment environment;
-
-    @Autowired
-    public void setEnvironment(Environment environment) {
-        this.environment = environment;
-    }
-
+    private final Environment environment;
 
     @Bean
     public DataSource dataSource() {
@@ -41,9 +34,9 @@ public class JpaConfig {
         dataSource.setUsername(Objects.requireNonNull(environment.getProperty("db.username")));
         dataSource.setPassword(Objects.requireNonNull(environment.getProperty("db.password")));
 
+
         return dataSource;
     }
-
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -73,6 +66,7 @@ public class JpaConfig {
         properties.put("hibernate.show_sql", Objects.requireNonNull(environment.getProperty("db.hibernate.show_sql")));
         properties.put("hibernate.hbm2ddl.auto", Objects.requireNonNull(environment.getProperty("db.hibernate.hbm2ddl.auto")));
         properties.put("hibernate.enable_lazy_load_no_trans", true);
+        properties.put("spring.datasource.initialization-mode", Objects.requireNonNull(environment.getProperty("spring.datasource.initialization-mode")));
 
         return properties;
     }

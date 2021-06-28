@@ -1,8 +1,11 @@
 package by.nyurush.blog.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericToStringSerializer;
@@ -11,10 +14,22 @@ import org.springframework.data.redis.serializer.GenericToStringSerializer;
 @Configuration
 @ComponentScan("by.nyurush.blog")
 public class RedisConfig {
+    @Value("${redis.host}")
+    private String host;
+    @Value("${redis.port}")
+    private int port;
 
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
-        return new JedisConnectionFactory();
+        RedisStandaloneConfiguration redisStandaloneConfiguration =
+                new RedisStandaloneConfiguration(host, port);
+        return new JedisConnectionFactory(redisStandaloneConfiguration);
+//
+//
+//        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
+//        jedisConnectionFactory.setHostName(host);
+//
+//        return new JedisConnectionFactory();
     }
 
 
@@ -28,41 +43,3 @@ public class RedisConfig {
 
 }
 
-//todo
-//@Configuration
-//public class RedisConfig {
-//
-//    @Value("${redis.host}")
-//    private String redisHost;
-//
-//    @Value("${redis.port}")
-//    private Integer redisPort;
-//
-//    @Value("${redis.pass}")
-//    private String redisPass;
-//
-//    @Bean
-//    @Primary
-//    JedisConnectionFactory jedisConnectionFactory() throws Exception {
-//        JedisConnectionFactory factory = new JedisConnectionFactory();
-//        factory.setHostName(redisHost);
-//        factory.setPort(redisPort);
-//        if (redisPass != null) {
-//            factory.setPassword(redisPass);
-//        }
-//        factory.setUsePool(true);
-//
-//        return factory;
-//    }
-//
-//    @Bean
-//    RedisTemplate<String, Object> redisTemplate() throws Exception {
-//        final RedisTemplate<String, Object> template = new RedisTemplate<>();
-//        template.setConnectionFactory(jedisConnectionFactory());
-//        template.setKeySerializer(new StringRedisSerializer());
-//
-//        template.setHashValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
-//        template.setValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
-//        return template;
-//    }
-//}
