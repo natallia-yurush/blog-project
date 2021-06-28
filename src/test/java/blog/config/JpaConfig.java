@@ -1,4 +1,4 @@
-package by.nyurush.blog.config;
+package blog.config;
 
 import lombok.RequiredArgsConstructor;
 import org.hibernate.jpa.HibernatePersistenceProvider;
@@ -20,8 +20,7 @@ import java.util.Properties;
 @Configuration
 @RequiredArgsConstructor
 @EnableTransactionManagement
-@ComponentScan("by.nyurush.blog")
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:application-test.properties")
 @EnableJpaRepositories("by.nyurush.blog")
 public class JpaConfig {
     private final Environment environment;
@@ -33,7 +32,6 @@ public class JpaConfig {
         dataSource.setUrl(Objects.requireNonNull(environment.getProperty("db.url")));
         dataSource.setUsername(Objects.requireNonNull(environment.getProperty("db.username")));
         dataSource.setPassword(Objects.requireNonNull(environment.getProperty("db.password")));
-
 
         return dataSource;
     }
