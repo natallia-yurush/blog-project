@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -106,9 +105,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        Optional<User> foundUser = userRepository.findByEmail(email);
-        log.info("IN findByUsername - user: {} found by email: {}", foundUser, email);
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    }
+
+    @Override
+    public User findByEmail(String email) {
+        User foundUser = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+        log.info("IN findByUsername - user found by email: {}", email);
         return foundUser;
     }
 

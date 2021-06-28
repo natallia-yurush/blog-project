@@ -1,6 +1,5 @@
 package by.nyurush.blog.config;
 
-import by.nyurush.blog.converter.UserConverter;
 import by.nyurush.blog.security.jwt.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
