@@ -1,4 +1,4 @@
-package by.nyurush.blog.exception.article;
+package by.nyurush.blog.exception;
 
 public class ArticleNotFoundException extends RuntimeException {
     public ArticleNotFoundException() {

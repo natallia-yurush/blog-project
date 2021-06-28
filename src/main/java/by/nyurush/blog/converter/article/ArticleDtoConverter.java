@@ -2,6 +2,7 @@ package by.nyurush.blog.converter.article;
 
 import by.nyurush.blog.dto.ArticleDto;
 import by.nyurush.blog.entity.Article;
+import by.nyurush.blog.entity.Tag;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,10 @@ public class ArticleDtoConverter implements Converter<Article, ArticleDto> {
         articleDto.setTitle(article.getTitle());
         articleDto.setText(article.getText());
         articleDto.setStatus(article.getStatus());
-        articleDto.setTags(article.getTags());
+        articleDto.setTagsId(article.getTags()
+                .stream()
+                .map(Tag::getId)
+                .toList());
 
         return articleDto;
     }

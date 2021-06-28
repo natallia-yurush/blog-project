@@ -3,11 +3,9 @@ package by.nyurush.blog.service;
 import by.nyurush.blog.entity.Article;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface ArticleService {
     Article findById(Long id);
 
@@ -20,5 +18,8 @@ public interface ArticleService {
     List<Article> findAllByUser(String email);
 
     Page<Article> findToFilter(String title, Long authorId, Pageable pageable);
+
+    List<Article> findAllByTags(List<Long> articleIds);
+
 
 }
