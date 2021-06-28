@@ -1,4 +1,4 @@
-package by.nyurush.blog.controller.util;
+package by.nyurush.blog.util;
 
 import org.springframework.data.domain.Sort;
 

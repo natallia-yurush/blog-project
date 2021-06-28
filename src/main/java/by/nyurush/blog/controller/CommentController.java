@@ -1,9 +1,7 @@
 package by.nyurush.blog.controller;
 
-import by.nyurush.blog.controller.util.SortOrderUtil;
-import by.nyurush.blog.dto.ArticleDto;
+import by.nyurush.blog.util.SortOrderUtil;
 import by.nyurush.blog.dto.CommentDto;
-import by.nyurush.blog.entity.Article;
 import by.nyurush.blog.entity.Comment;
 import by.nyurush.blog.security.jwt.JwtTokenProvider;
 import by.nyurush.blog.service.CommentService;
