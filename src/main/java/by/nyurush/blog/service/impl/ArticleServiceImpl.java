@@ -1,6 +1,7 @@
 package by.nyurush.blog.service.impl;
 
 import by.nyurush.blog.entity.Article;
+import by.nyurush.blog.entity.Status;
 import by.nyurush.blog.entity.User;
 import by.nyurush.blog.exception.ArticleNotFoundException;
 import by.nyurush.blog.exception.NoPermissionException;
@@ -86,6 +87,7 @@ public class ArticleServiceImpl implements ArticleService {
                 .builder()
                 .title(title)
                 .user(user)
+                .status(Status.PUBLIC)
                 .build();
 
         return articleRepository.findAll(Example.of(example), pageable);

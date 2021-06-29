@@ -34,7 +34,6 @@ public class JpaConfig {
         dataSource.setUsername(Objects.requireNonNull(environment.getProperty("db.username")));
         dataSource.setPassword(Objects.requireNonNull(environment.getProperty("db.password")));
 
-
         return dataSource;
     }
 
@@ -43,7 +42,8 @@ public class JpaConfig {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
-        entityManagerFactoryBean.setPackagesToScan(Objects.requireNonNull(environment.getProperty("db.entitling.packages.to.scan")));
+        entityManagerFactoryBean.setPackagesToScan(Objects.requireNonNull(
+                environment.getProperty("db.entitling.packages.to.scan")));
 
         entityManagerFactoryBean.setJpaProperties(getHibernateProperties());
 
@@ -62,11 +62,17 @@ public class JpaConfig {
 
     private Properties getHibernateProperties() {
         Properties properties = new Properties();
-        properties.put("hibernate.dialect", Objects.requireNonNull(environment.getProperty("db.hibernate.dialect")));
-        properties.put("hibernate.show_sql", Objects.requireNonNull(environment.getProperty("db.hibernate.show_sql")));
-        properties.put("hibernate.hbm2ddl.auto", Objects.requireNonNull(environment.getProperty("db.hibernate.hbm2ddl.auto")));
+        properties.put("hibernate.dialect", Objects.requireNonNull(
+                environment.getProperty("db.hibernate.dialect")));
+        properties.put("hibernate.show_sql", Objects.requireNonNull(
+                environment.getProperty("db.hibernate.show_sql")));
+        properties.put("hibernate.hbm2ddl.auto", Objects.requireNonNull(
+                environment.getProperty("db.hibernate.hbm2ddl.auto")));
         properties.put("hibernate.enable_lazy_load_no_trans", true);
-        properties.put("spring.datasource.initialization-mode", Objects.requireNonNull(environment.getProperty("spring.datasource.initialization-mode")));
+        properties.put("spring.datasource.initialization-mode", Objects.requireNonNull(
+                environment.getProperty("spring.datasource.initialization-mode")));
+        properties.put("spring.datasource.data", Objects.requireNonNull(
+                environment.getProperty("spring.datasource.data")));
 
         return properties;
     }

@@ -35,18 +35,11 @@ public class CommentController {
     public void addComment(@PathVariable Long articleId,
                            @RequestBody CommentDto commentDto,
                            HttpServletRequest req) {
+        commentDto.setArticleId(articleId);
         String email = jwtTokenProvider.getEmail(req);
         Comment comment = conversionService.convert(commentDto, Comment.class);
         commentService.save(comment, email);
     }
-
-//    @GetMapping
-//    public List<CommentDto> getAllComments(@PathVariable Long articleId) {
-//        return commentService.findAllByArticle(articleId)
-//                .stream()
-//                .map(comment -> conversionService.convert(comment, CommentDto.class))
-//                .toList();
-//    }
 
     @GetMapping
     public List<CommentDto> getAllComments(
@@ -61,8 +54,6 @@ public class CommentController {
         List<Comment> comments;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortOrder));
 
-       // Page<Comment> commentPage = commentService.
-
         Page<Comment> articlePage = commentService.findAllByArticle(articleId, pageable);
         comments = articlePage.getContent();
 
@@ -71,8 +62,6 @@ public class CommentController {
                 .toList();
 
     }
-
-
 
     @GetMapping("/{commentId}")
     public CommentDto getComment(@PathVariable Long articleId,

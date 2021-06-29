@@ -12,16 +12,12 @@ import java.util.Properties;
 public class MailConfig {
     @Value("${mail.host}")
     private String host;
-
     @Value("${mail.port}")
     private int port;
-
     @Value("${mail.username}")
     private String username;
-
     @Value("${mail.password}")
     private String password;
-
     @Value("${mail.protocol}")
     private String protocol;
 

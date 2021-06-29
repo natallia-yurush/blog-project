@@ -1,6 +1,7 @@
 package by.nyurush.blog.service.impl;
 
 import by.nyurush.blog.service.MailService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -10,7 +11,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @PropertySource("classpath:constants.properties")
+@RequiredArgsConstructor
 public class MailServiceImpl implements MailService {
+    private final JavaMailSender emailSender;
 
     @Value("${mail.confirm}")
     private String confirmType;
@@ -26,9 +29,6 @@ public class MailServiceImpl implements MailService {
     private String linkToConfirm;
     @Value("${mail.link.reset}")
     private String linkToReset;
-
-    @Autowired
-    private JavaMailSender emailSender;
 
 
     private void sendEmail(String email, String messageText, String messageType) {
