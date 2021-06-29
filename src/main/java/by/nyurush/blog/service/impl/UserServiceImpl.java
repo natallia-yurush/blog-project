@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void confirmUser(String hashCode) {
         if (redisService.isCodeExist(hashCode)) {
             String email = redisService.getValue(hashCode);
@@ -73,6 +74,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void resetPassword(String email) {
         userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
 
@@ -84,6 +86,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void updatePassword(String code, String newPassword) {
         String email = redisService.getValue(code);
         if (email == null || email.isBlank()) {
